@@ -7,20 +7,13 @@ class CitizenManager {
         Scanner in = new Scanner(System.in);
 
         // Arrays for people's details:
-        String[] names = new String[10];
-        String[] sins = new String[names.length];
-        String[] dobs = new String[names.length];
-        String[] licenseNumbers = new String[names.length];
+        Driver[] drivers = new Driver[10];
 
         // Arrays for vehicle details:
-        String[] licensePlates = new String[4];
-        String[] ownerLicenseNumbers = new String[licensePlates.length];
-        String[] makes = new String[licensePlates.length];
-        int[] modelYears = new int[licensePlates.length];
-        String[] colours = new String[licensePlates.length];
+        Vehicle[] vehicles = new Vehicle[4];
 
-        loadPersons("data/persons.txt", 10, names, sins, dobs, licenseNumbers);
-        loadVehicles("data/vehicles.txt", 4, licensePlates, ownerLicenseNumbers, makes, modelYears, colours);
+        loadPersons("data/persons.txt", 10, drivers);
+        loadVehicles("data/vehicles.txt", 4, vehicles);
 
         // Interface for person or vehicle lookup
         while (true) {
@@ -30,8 +23,8 @@ class CitizenManager {
             boolean found = false;
 
             // Linear search for matching vehicle
-            for (index = 0; index < licensePlates.length; index++) {
-                if (licensePlates[index].equalsIgnoreCase(licensePlate)) {
+            for (index = 0; index < vehicles.length; index++) {
+                if (vehicles[index].licensePlate.equalsIgnoreCase(licensePlate)) {
                     found = true;
                     break;
                 }
@@ -43,14 +36,15 @@ class CitizenManager {
             }
 
             // Otherwise, linear search for owner:
-            String ownerLicense = ownerLicenseNumbers[index];
-            for (int i = 0; i < licenseNumbers.length; i++) {
-                if (ownerLicense.equalsIgnoreCase(licenseNumbers[i])) {
+            String ownerLicense = vehicles[index].ownerLicense;
+            for (int i = 0; i < drivers.length; i++) {
+                Driver driver = drivers[i];
+                if (ownerLicense.equalsIgnoreCase(driver.license)) {
                     System.out.println("Owner details:");
-                    System.out.println("Name: " + names[i]);
-                    System.out.println("SIN: " + sins[i]);
-                    System.out.println("Date of birth: " + dobs[i]);
-                    System.out.println("License: " + licenseNumbers[i]);
+                    System.out.println("Name: " + driver.name);
+                    System.out.println("SIN: " + driver.sin);
+                    System.out.println("Date of birth: " + driver.dob);
+                    System.out.println("License: " + driver.license);
                     break;
                 }
             }
@@ -59,15 +53,15 @@ class CitizenManager {
         }
     }
 
-    static void loadPersons(String filename, int count, String[] names, String[] sins, String[] dobs,
-            String[] licenses) {
+    static void loadPersons(String filename, int count, Driver[] drivers) {
         try {
             Scanner fin = new Scanner(new FileReader(filename));
             for (int i = 0; i < count; i++) {
-                names[i] = fin.nextLine();
-                sins[i] = fin.nextLine();
-                dobs[i] = fin.nextLine();
-                licenses[i] = fin.nextLine();
+                drivers[i] = new Driver();      // Must create an empty Driver for at each index first!
+                drivers[i].name = fin.nextLine();
+                drivers[i].sin = fin.nextLine();
+                drivers[i].dob = fin.nextLine();
+                drivers[i].license = fin.nextLine();
             }
             fin.close();
         } catch (FileNotFoundException e) {
@@ -75,16 +69,16 @@ class CitizenManager {
         }
     }
 
-    static void loadVehicles(String filename, int count, String[] licensePlates, String[] ownerLicenses, String[] makes,
-            int[] modelYears, String[] colours) {
+    static void loadVehicles(String filename, int count, Vehicle[] vehicles) {
         try {
             Scanner fin = new Scanner(new FileReader(filename));
             for (int i = 0; i < count; i++) {
-                licensePlates[i] = fin.nextLine();
-                ownerLicenses[i] = fin.nextLine();
-                makes[i] = fin.nextLine();
-                modelYears[i] = Integer.parseInt(fin.nextLine());
-                colours[i] = fin.nextLine();
+                vehicles[i] = new Vehicle();
+                vehicles[i].licensePlate = fin.nextLine();
+                vehicles[i].ownerLicense = fin.nextLine();
+                vehicles[i].make = fin.nextLine();
+                vehicles[i].modelYear = Integer.parseInt(fin.nextLine());
+                vehicles[i].colour = fin.nextLine();
             }
             fin.close();
         } catch (FileNotFoundException e) {
