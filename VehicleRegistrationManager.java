@@ -26,6 +26,8 @@ class CitizenManager {
             for (index = 0; index < vehicles.length; index++) {
                 if (vehicles[index].licensePlate.equalsIgnoreCase(licensePlate)) {
                     found = true;
+                    System.out.println("Vehicle details:");
+                    vehicles[index].prettyPrint();
                     break;
                 }
             }
@@ -41,10 +43,7 @@ class CitizenManager {
                 Driver driver = drivers[i];
                 if (ownerLicense.equalsIgnoreCase(driver.license)) {
                     System.out.println("Owner details:");
-                    System.out.println("Name: " + driver.name);
-                    System.out.println("SIN: " + driver.sin);
-                    System.out.println("Date of birth: " + driver.dob);
-                    System.out.println("License: " + driver.license);
+                    driver.prettyPrint();
                     break;
                 }
             }
