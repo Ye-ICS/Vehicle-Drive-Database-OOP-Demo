@@ -1,0 +1,20 @@
+ABC1234
+A1234567
+Toyota Camry
+2015
+Blue
+XYZ5678
+J8901234
+Honda Civic
+2018
+Red
+LMN8901
+G5678901
+Ford Focus
+2016
+Black
+PQR2345
+A1234567
+Chevrolet Malibu
+2017
+White
